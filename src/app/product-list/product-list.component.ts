@@ -23,11 +23,11 @@ export class ProductListComponent implements OnInit {
   }
 
   handleError(err: any): void {
-    throw new Error("Method not implemented.");
+    throw new Error('Method not implemented.');
   }
 
-  onProductLoaded(res: Product[]): void {
-    this.products = res.sort((p1, p2) => p1.Name.localeCompare(p2.Name));
+  onProductLoaded(products: Product[]): void {
+    this.products = products.sort((p1, p2) => p1.Name.localeCompare(p2.Name));
   }
 
   onDetailsClicked(id: number): void {

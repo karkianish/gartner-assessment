@@ -1,19 +1,46 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Product } from '../product';
+import { Router, ActivatedRoute } from '@angular/router';
+import { ProductService } from '../product.service';
 
 @Component({
-  selector: 'app-product-detail',
-  templateUrl: './product-detail.component.html',
-  styleUrls: ['./product-detail.component.scss']
+  templateUrl: './product-detail.component.html'
 })
 export class ProductDetailComponent implements OnInit {
 
-  @Input() product: Product;
+  private readonly _id: number;
+  product: Product;
+  categoryNames = '';
 
-  constructor() { }
+  constructor(private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private http: ProductService) {
+    this._id = this.activatedRoute.snapshot.params['id'] as number;
+  }
 
   ngOnInit() {
-    // let id = this.route.snapshot.paramMap.get('id');
+    this.http.getProduct(this._id)
+      .subscribe(res => this.onProductReceived(res),
+        err => this.handleError(err));
+  }
+
+  onProductReceived(product: Product): void {
+    this.product = product;
+    this.categoryNames = this.product.Categories
+      .map(category => category.Name)
+      .join(', ');
+  }
+
+  onBackClicked(): void {
+    this.router.navigate(['products']);
+  }
+
+  onEditClicked(): void {
+    this.router.navigate(['edit', this._id]);
+  }
+
+  handleError(err: any): void {
+    // throw new Error('Method not implemented.');
   }
 
 }

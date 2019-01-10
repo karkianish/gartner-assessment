@@ -1,17 +1,26 @@
+<div class='card'>
+  <div class='card-header bg-info text-white h3'>Product Detail</div>
+  <div class='card-body'>
+    <div class='row mt-3'>
+      <div class='col-12 col-md-3'><b>Name</b></div>
+      <div class='col-12 col-md-9'>{{product?.Name}}</div>
+    </div>
+    <div class='row mt-3'>
+      <div class='col-12 col-md-3'><b>Description</b></div>
+      <div class='col-12 col-md-9'>{{product?.Description}}</div>
+    </div>
+    <div class='row mt-3'>
+      <div class='col-12 col-md-3'><b>Website</b></div>
+      <div class='col-12 col-md-9'>{{product?.Url}}</div>
+    </div>
+    <div class='row mt-3'>
+      <div class='col-12 col-md-3'><b>Categories</b></div>
+      <div class='col-12 col-md-9'>{{categoryNames}}</div>
+    </div>
 
-<div class="row">
-  <div class="col-2">Name:</div>
-  <div class="col">{{product?.Name}}</div>
-</div>
-<div class="row">
-  <div class="col-2">Description:</div>
-  <div class="col">{{product.description}}</div>
-</div>
-<div class="row">
-  <div class="col-2">Url:</div>
-  <div class="col">product description</div>
-</div>
-<div class="row">
-  <div class="col-2">Categories:</div>
-  <div class="col">product description</div>
+    <div class='row'>
+      <button type='button' class='btn btn-primary mt-3 ml-3' (click)='onBackClicked()'>Back To Summary</button>
+      <button type='button' class='btn btn-primary mt-3 ml-3' (click)='onEditClicked()'>Edit</button>
+    </div>
+  </div>
 </div>

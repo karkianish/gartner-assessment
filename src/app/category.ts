@@ -1,4 +1,4 @@
 export class Category {
-  constructor(CategoryId: number = null,
-    Name: string = null) { }
+  constructor(public CategoryId: number = null,
+    public Name: string = null) { }
 }

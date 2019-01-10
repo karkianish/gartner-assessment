@@ -27,8 +27,8 @@ export class ProductService {
     return this.http.get<Product[]>(`${this._apiPath}/products`, { headers: this._headers });
   }
 
-  getProduct(id: string): Observable<Product> {
-    return this.http.get<Product>(`${this._apiPath}/product/${id}`, { headers: this._headers });
+  getProduct(id: number): Observable<Product> {
+    return this.http.get<Product>(`${this._apiPath}/products/${id}`, { headers: this._headers });
   }
 
   addProduct(payload: Product): Observable<Product> {

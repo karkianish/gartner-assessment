@@ -1,49 +1,49 @@
-<div class="card bg-primary text-white">
-  <div class="card-header">Products</div>
-  <div class="card-body bg-light text-dark">
+<div class='card '>
+  <div class='card-header bg-primary text-white h3'>Products</div>
+  <div class='card-body'>
 
-    <div class="row border-bottom border-top">
-      <div class="p-3 col-2"><b>Name</b></div>
-      <div class="p-3 col"><b>Description</b></div>
-      <div class="p-3 col-xs-3 col-md-1"></div>
-      <div class="p-3 col-xs-3 col-md-1"></div>
+    <!-- <div class='row border-bottom border-top'>
+      <div class='p-3 col-2'><b>Name</b></div>
+      <div class='p-3 col'><b>Description</b></div>
+      <div class='p-3 col-xs-3 col-md-1'></div>
+      <div class='p-3 col-xs-3 col-md-1'></div>
     </div>
-    <div *ngFor="let product of products">
-      <div class="row border-top">
-        <div class="p-3 col-2 ">{{product.Name}}</div>
-        <div class="p-3 col">{{product.Description}}</div>
-        <div class="p-3 col-1">
-          <button type="button" class="btn btn-link" (click)="onDetailsClicked(product.ProductId)">Details</button>
+    <div *ngFor='let product of products'>
+      <div class='row border-top'>
+        <div class='p-3 col-2 '>{{product.Name}}</div>
+        <div class='p-3 col'>{{product.Description}}</div>
+        <div class='p-3 col-1'>
+          <button type='button' class='btn btn-link' (click)='onDetailsClicked(product.ProductId)'>Details</button>
         </div>
-        <div class="p-3 col-1">
-          <button type="button" class="btn btn-link" (click)="onEditClicked(product.ProductId)">Edit</button>
+        <div class='p-3 col-1'>
+          <button type='button' class='btn btn-link' (click)='onEditClicked(product.ProductId)'>Edit</button>
         </div>
       </div>
 
-      <div class="row">
-        <div class="p-3 col-2 "></div>
-        <div class="p-3 col">{{product.Description}}</div>
-      </div>
-      <!-- <table class="table table-hover">
+      <div class='row'>
+        <div class='p-3 col-2 '></div>
+        <div class='p-3 col'>{{product.Description}}</div>
+      </div> -->
+      <table class='table table-hover'>
       <thead>
         <tr>
-          <th scope="col-2">Name</th>
-          <th scope="col">Description</th>
-          <th scope="col-1"></th>
-          <th scope="col-1"></th>
+          <th scope='col-2'>Name</th>
+          <th scope='col'>Description</th>
+          <th scope='col-1'></th>
+          <th scope='col-1'></th>
         </tr>
       </thead>
       <tbody>
         
-          <tr *ngFor="let product of products">
-            <th scope="row">{{product.Name}}</th>
+          <tr *ngFor='let product of products'>
+            <th scope='row'>{{product.Name}}</th>
             <td>{{product.Description}}</td>
-            <td><button type="button" class="btn btn-link" (click)="onDetailsClicked(product.ProductId)">Details</button></td>
-            <td><button type="button" class="btn btn-link" (click)="onEditClicked(product.ProductId)">Edit</button></td>
+            <td><button type='button' class='btn btn-link' (click)='onDetailsClicked(product.ProductId)'>Details</button></td>
+            <td><button type='button' class='btn btn-link' (click)='onEditClicked(product.ProductId)'>Edit</button></td>
           </tr>
         
       </tbody>
-    </table> -->
+    </table>
 
     </div>
   </div>
