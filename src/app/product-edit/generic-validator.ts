@@ -22,7 +22,11 @@ export class GenericValidator {
           const messages = this.validationMessages[ctrlName];
           for (const ruleKey in ctrl.errors) {
             if (ruleKey) {
-              formErrors[ctrlName] += messages[ruleKey] + ' ';
+              if (formErrors[ctrlName]) {
+                formErrors[ctrlName] += messages[ruleKey] + ' ';
+              } else {
+                formErrors[ctrlName] = messages[ruleKey] + ' ';
+              }
             }
           }
         }

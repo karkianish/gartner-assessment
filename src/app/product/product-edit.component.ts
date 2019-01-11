@@ -1,18 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ProductService } from '../product.service';
-import { Product } from '../product';
-import { GenericValidator } from './generic-validator';
+import { ProductService } from './product.service';
+import { Product } from './product.model';
+import { GenericValidator } from '../product-edit/generic-validator';
 import { debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'app-product-edit',
-  templateUrl: './product-edit.component.html',
-  styleUrls: ['./product-edit.component.scss']
+  templateUrl: './product-edit.component.html'
 })
 export class ProductEditComponent implements OnInit {
   private readonly _id: number;
+  private readonly _maxLengthName = 50;
+  private readonly _maxLengthDescription = 200;
+  private readonly _maxLengthUrl = 500;
 
   productEditForm: FormGroup;
   product: Product;
@@ -33,10 +35,6 @@ export class ProductEditComponent implements OnInit {
 
   formErrors: { [controlName: string]: string } = {};
 
-  private readonly _maxLengthName = 50;
-  private readonly _maxLengthDescription = 200;
-  private readonly _maxLengthUrl = 500;
-
   constructor(private formBuilder: FormBuilder,
     private http: ProductService,
     private router: Router,
@@ -55,23 +53,32 @@ export class ProductEditComponent implements OnInit {
 
     this.productEditForm.valueChanges.pipe(debounceTime(200)).subscribe(data => this.onFormChanged(data));
 
-      this.http.getProduct(this._id).subscribe(
-        res => this.onProductReceived(res),
-        err => this.handleError(err)
-      );
+    this.http.getProduct(this._id).subscribe(
+      res => this.onProductReceived(res),
+      err => this.handleError(err)
+    );
   }
 
   onFormChanged(data: any): void {
-    console.log(data);
+    this.formErrors = this.validator.validate(this.productEditForm);
+    console.log(this.formErrors);
   }
 
   onProductReceived(product: Product): void {
     this.product = product;
+    this.productEditForm.patchValue({
+      name: this.product.Name,
+      description: this.product.Description,
+      url: this.product.Url,
+      categories: this.product.Categories.map(x => x.Name).join(', ')
+    });
   }
 
   handleError(err: any): void {
   }
 
-
+  onBackToSummaryClicked(): void {
+    this.router.navigate(['products']);
   }
-  
+
+}

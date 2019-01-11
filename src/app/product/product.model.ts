@@ -1,5 +1,3 @@
-import { Category } from './category';
-
 export class Product {
   ProductId: number;
   // Name: string;
@@ -10,9 +8,9 @@ export class Product {
   constructor(public Name: string,
     public Description?: string,
     public Url?: string,
-    public Categories: Array<Category> = []) { console.log('product invoked')}
+    public Categories: Array<Category> = []) {}
 
-  get categoryNames(): string {
+  //  categoryNames(): string {
     // console.log('cat', this.Categories)
     // const a = this.Categories
     //   .map(category => category.Name);
@@ -20,7 +18,12 @@ export class Product {
     //   const b = a.join(', ');
     //   console.log(b);
     //   return b;
-    return 'cat names';
-  }
+  //   return 'cat names';
+  // }
   // CategoryNames: string = (() => this.Categories.map(x=>x.Name).join(', '));
+}
+
+export class Category {
+  constructor(public CategoryId: number = null,
+    public Name: string = null) { }
 }

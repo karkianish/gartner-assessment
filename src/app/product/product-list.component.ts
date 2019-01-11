@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { ProductService } from '../product.service';
-import { Product } from '../product';
+import { ProductService } from './product.service';
+import { Product } from './product.model';
 import { FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 
 @Component({
-  templateUrl: './product-list.component.html',
-  styleUrls: ['./product-list.component.scss']
+  templateUrl: './product-list.component.html'
 })
 export class ProductListComponent implements OnInit {
 
