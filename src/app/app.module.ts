@@ -7,8 +7,14 @@ import { AppComponent } from './app.component';
 import { ProductDetailComponent } from './product/product-detail.component';
 import { ProductEditComponent } from './product/product-edit.component';
 import { ProductListComponent } from './product/product-list.component';
-import { RouterModule } from '@angular/router';
-import { AppRoutingModule } from './app-routing.module';
+import { Routes, RouterModule } from '@angular/router';
+
+const routes: Routes = [
+  { path: '', redirectTo: 'products', pathMatch: 'full'},
+  { path: 'products', component: ProductListComponent },
+  { path: 'details/:id', component: ProductDetailComponent },
+  { path: 'edit/:id', component: ProductEditComponent }
+];
 
 @NgModule({
   declarations: [
@@ -19,9 +25,9 @@ import { AppRoutingModule } from './app-routing.module';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,
+    RouterModule.forRoot(routes)
   ],
   providers: [],
   bootstrap: [AppComponent]

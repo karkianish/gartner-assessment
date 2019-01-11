@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ProductService } from './product.service';
 import { Product } from './product.model';
-import { GenericValidator } from '../product-edit/generic-validator';
+import { GenericValidator } from '../generic-validator';
 import { debounceTime } from 'rxjs/operators';
 
 @Component({

@@ -2,9 +2,10 @@ import { FormGroup } from '@angular/forms';
 
 /**
  * ak - 01-10-2018
- * This is a generic validator we use at our work. We learned about this from one of the pluralsight courses.
+ * This is a generic validator we use at our work. We learned about this from one of a pluralsight courses.
  * Although it seems overkill for this task, since the requirement had said to code for reusability, I thought
  * this may be count as a positive.
+ * This function recursively walks through all the control and extracts validation error messages for the control.
  */
 
 export class GenericValidator {
