@@ -12,9 +12,9 @@ import { debounceTime } from 'rxjs/operators';
 })
 export class ProductEditComponent implements OnInit {
   private readonly _id: number;
-  private readonly _maxLengthName = 50;
-  private readonly _maxLengthDescription = 200;
-  private readonly _maxLengthUrl = 500;
+  private readonly _nameMaxLength = 50;
+  private readonly _descriptionMaxLength = 200;
+  private readonly _urlMaxLength = 500;
 
   productEditForm: FormGroup;
   product: Product;
@@ -23,13 +23,13 @@ export class ProductEditComponent implements OnInit {
   allValidationMessages = {
     'name': {
       'required': 'Product name is required.',
-      'maxlength': `Cannot be more than ${this._maxLengthName} characters.`
+      'maxlength': `Cannot be more than ${this._nameMaxLength} characters.`
     },
     'description': {
-      'maxlength': `Cannot be more than ${this._maxLengthDescription} characters.`
+      'maxlength': `Cannot be more than ${this._descriptionMaxLength} characters.`
     },
     'url': {
-      'maxlength': `Cannot be more than ${this._maxLengthUrl} characters.`
+      'maxlength': `Cannot be more than ${this._urlMaxLength} characters.`
     }
   };
 
@@ -45,13 +45,17 @@ export class ProductEditComponent implements OnInit {
 
   ngOnInit() {
     this.productEditForm = this.formBuilder.group({
-      name: ['', [Validators.required, Validators.maxLength(this._maxLengthName)]],
-      description: ['', Validators.maxLength(this._maxLengthDescription)],
-      url: ['', Validators.maxLength(this._maxLengthUrl)],
+      name: ['', [Validators.required, Validators.maxLength(this._nameMaxLength)]],
+      description: ['', Validators.maxLength(this._descriptionMaxLength)],
+      url: ['', Validators.maxLength(this._urlMaxLength)],
       categories: ['']
     });
 
-    this.productEditForm.valueChanges.pipe(debounceTime(200)).subscribe(data => this.onFormChanged(data));
+    this.productEditForm.valueChanges
+      .pipe(debounceTime(200))
+      .subscribe(data => this.onFormChanged(data));
+
+    this.http.getCategories().subscribe(x => console.log(x));
 
     this.http.getProduct(this._id).subscribe(
       res => this.onProductReceived(res),
@@ -61,7 +65,6 @@ export class ProductEditComponent implements OnInit {
 
   onFormChanged(data: any): void {
     this.formErrors = this.validator.validate(this.productEditForm);
-    console.log(this.formErrors);
   }
 
   onProductReceived(product: Product): void {
@@ -81,4 +84,19 @@ export class ProductEditComponent implements OnInit {
     this.router.navigate(['products']);
   }
 
+  onUpdateClicked(): void {
+    const updatedProduct = this.getUpdatedProduct();
+    this.productEditForm.disable();
+  }
+
+  getUpdatedProduct(): Product {
+    const product = new Product();
+    product.Name = this.productEditForm.get('name').value as string;
+    product.Description = this.productEditForm.get('description').value as string;
+    product.Url = this.productEditForm.get('url').value as string;
+    // = this.productEditForm.get('').value as string;
+    console.log(product);
+    console.log(this.productEditForm.get('categories').value);
+    return product;
+  }
 }

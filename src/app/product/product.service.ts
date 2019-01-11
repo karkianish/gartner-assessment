@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Product, Category } from './product.model';
 
@@ -18,7 +18,7 @@ export class ProductService {
   constructor(private http: HttpClient) { }
 
   getCategories(): Observable<Category[]> {
-    return this.http.get<Category[]>(`${this._apiPath}/categories`, { headers: this._headers });
+    return this.http.get<Category[]>(`${this._apiPath}/categories`, { headers: this._headers});
   }
 
   getProducts(): Observable<Product[]> {
