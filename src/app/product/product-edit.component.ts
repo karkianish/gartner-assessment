@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ProductService } from './product.service';
-import { Product } from './product.model';
+import { Product, Category } from './product.model';
 import { GenericValidator } from '../generic-validator';
 import { debounceTime } from 'rxjs/operators';
+import { TagsComponent } from './tags.component';
 
 @Component({
   selector: 'app-product-edit',
@@ -16,8 +17,12 @@ export class ProductEditComponent implements OnInit {
   private readonly _descriptionMaxLength = 200;
   private readonly _urlMaxLength = 500;
 
+  @ViewChild(TagsComponent)
+  tagComponent: TagsComponent;
+
   productEditForm: FormGroup;
   product: Product;
+  allCategories: Array<Category> = [];
 
   validator: GenericValidator;
   allValidationMessages = {
@@ -55,7 +60,11 @@ export class ProductEditComponent implements OnInit {
       .pipe(debounceTime(200))
       .subscribe(data => this.onFormChanged(data));
 
-    this.http.getCategories().subscribe(x => console.log(x));
+    this.http.getCategories().subscribe(res => {
+      this.allCategories = res;
+      this.tagComponent.options = res.map(x => x.Name)
+        .sort((a, b) => a.localeCompare(b));
+    });
 
     this.http.getProduct(this._id).subscribe(
       res => this.onProductReceived(res),
@@ -72,9 +81,10 @@ export class ProductEditComponent implements OnInit {
     this.productEditForm.patchValue({
       name: this.product.Name,
       description: this.product.Description,
-      url: this.product.Url,
-      categories: this.product.Categories.map(x => x.Name).join(', ')
+      url: this.product.Url
+      // categories: this.product.Categories.map(x => x.Name).join(', ')
     });
+    this.tagComponent.tags = product.Categories.map(x => x.Name);
   }
 
   handleError(err: any): void {
@@ -87,16 +97,22 @@ export class ProductEditComponent implements OnInit {
   onUpdateClicked(): void {
     const updatedProduct = this.getUpdatedProduct();
     this.productEditForm.disable();
+    this.http.updateProduct(updatedProduct)
+      .subscribe(res => { this.productEditForm.enable(); });
   }
 
   getUpdatedProduct(): Product {
     const product = new Product();
+    product.ProductId = this._id;
     product.Name = this.productEditForm.get('name').value as string;
     product.Description = this.productEditForm.get('description').value as string;
     product.Url = this.productEditForm.get('url').value as string;
     // = this.productEditForm.get('').value as string;
+    product.Categories = this.allCategories.filter(
+      category => this.tagComponent.tags.includes(category.Name));
+
+
     console.log(product);
-    console.log(this.productEditForm.get('categories').value);
     return product;
   }
 }

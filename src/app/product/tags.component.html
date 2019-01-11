@@ -1,0 +1,15 @@
+<form [formGroup]='tagForm'>
+  <label for="tag-input">Category</label>
+  <input type="text" id="tag-input" formControlName='tagInput' class='form-control' [ngbTypeahead]='search' (focus)="focus$.next($event.target.value)"
+    placeholder="type category name and hit enter" (click)="click$.next($event.target.value)" (keyup)="onKeyUp($event)">
+  <span *ngIf='showErrorMessage' class='text-danger'>
+    Please make a selection from the option.
+  </span>
+  <span *ngIf='showDuplicateMsg' class='text-danger'>
+    Duplicate selection is not allowed.
+  </span>
+  <div class='mb-3'>
+    <button type="button" *ngFor='let tag of tags' class="btn btn-info bg-info p-1 m-1 text-white">
+      {{tag}}<span class="remove-tag" (click)='onRemoveTagClicked(tag)'> x</span></button>
+  </div>
+</form>
