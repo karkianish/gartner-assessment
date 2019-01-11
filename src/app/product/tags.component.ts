@@ -39,8 +39,12 @@ export class TagsComponent implements OnInit {
   }
 
   onKeyUp(event: KeyboardEvent) {
+    this.tags = this.tags || [];
+    this.options = this.options || [];
+
     this.showDuplicateMsg = false;
     this.showErrorMessage = false;
+    
     const pressedEnterKey = event.keyCode === 13;
     if (pressedEnterKey) {
       const ctrl = this.tagForm.get('tagInput');
@@ -49,6 +53,7 @@ export class TagsComponent implements OnInit {
       } else if (this.tags.indexOf(ctrl.value) > -1) {
         this.showDuplicateMsg = true;
       } else {
+
         this.tags.push(ctrl.value);
         ctrl.reset();
       }

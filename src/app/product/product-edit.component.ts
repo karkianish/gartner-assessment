@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ProductService } from './product.service';
@@ -23,6 +23,7 @@ export class ProductEditComponent implements OnInit {
   productEditForm: FormGroup;
   product: Product;
   allCategories: Array<Category> = [];
+  updateSuccessful = false;
 
   validator: GenericValidator;
   allValidationMessages = {
@@ -82,9 +83,8 @@ export class ProductEditComponent implements OnInit {
       name: this.product.Name,
       description: this.product.Description,
       url: this.product.Url
-      // categories: this.product.Categories.map(x => x.Name).join(', ')
     });
-    this.tagComponent.tags = product.Categories.map(x => x.Name);
+    this.tagComponent.tags = product.Categories && product.Categories.map(x => x.Name);
   }
 
   handleError(err: any): void {
@@ -98,7 +98,10 @@ export class ProductEditComponent implements OnInit {
     const updatedProduct = this.getUpdatedProduct();
     this.productEditForm.disable();
     this.http.updateProduct(updatedProduct)
-      .subscribe(res => { this.productEditForm.enable(); });
+      .subscribe(res => {
+        this.productEditForm.enable();
+        this.updateSuccessful = true;
+      });
   }
 
   getUpdatedProduct(): Product {
@@ -107,12 +110,9 @@ export class ProductEditComponent implements OnInit {
     product.Name = this.productEditForm.get('name').value as string;
     product.Description = this.productEditForm.get('description').value as string;
     product.Url = this.productEditForm.get('url').value as string;
-    // = this.productEditForm.get('').value as string;
     product.Categories = this.allCategories.filter(
-      category => this.tagComponent.tags.includes(category.Name));
+      category => this.tagComponent.tags && this.tagComponent.tags.includes(category.Name));
 
-
-    console.log(product);
     return product;
   }
 }
