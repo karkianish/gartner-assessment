@@ -62,7 +62,6 @@ export class ProductEditorComponent implements OnInit {
     if (input && input.Categories) {
      this.tagComponent.tags = input.Categories.map(x => x.Name);
     }
-    console.log('tags',  this.tagComponent.tags)
   }
 
   @Input('allCategories')
