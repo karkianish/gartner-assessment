@@ -37,4 +37,7 @@ export class ProductListComponent implements OnInit {
     this.router.navigate(['edit', id]);
   }
 
+  onAddClicked(): void {
+    this.router.navigate(['add']);
+  }
 }

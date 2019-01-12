@@ -13,6 +13,7 @@ export class ProductEditorComponent implements OnInit {
   @Input() nameMaxLength = 50;
   @Input() descriptionMaxLength = 200;
   @Input() urlMaxLength = 500;
+  @Input() hideMsgInMiliseconds = 3000;
 
   @ViewChild(TagsComponent)
   tagComponent: TagsComponent;
@@ -49,6 +50,13 @@ export class ProductEditorComponent implements OnInit {
     this.formErrors = this.validator.validate(this.productEditForm);
   }
 
+  @Input('clearInputFields')
+  set clearInputFields(clear: boolean) {
+    if (clear) {
+      this.productEditForm.reset();
+    }
+  }
+
   @Input('product')
   set product(input: Product) {
     if (this.productEditForm) {
@@ -60,7 +68,7 @@ export class ProductEditorComponent implements OnInit {
     }
 
     if (input && input.Categories) {
-     this.tagComponent.tags = input.Categories.map(x => x.Name);
+      this.tagComponent.tags = input.Categories.map(x => x.Name);
     }
   }
 
@@ -79,7 +87,7 @@ export class ProductEditorComponent implements OnInit {
       this.canDisplayRightBtnSuccessMsg = true;
       setTimeout(() => {
         this.canDisplayRightBtnSuccessMsg = false;
-      }, 2000);
+      }, this.hideMsgInMiliseconds);
 
     } else {
       this.rightBtnSuccessMsg = '';
@@ -94,7 +102,7 @@ export class ProductEditorComponent implements OnInit {
       this.canDisplayRightBtnFailureMsg = true;
       setTimeout(() => {
         this.canDisplayRightBtnFailureMsg = false;
-      }, 2000);
+      }, this.hideMsgInMiliseconds);
 
     } else {
       this.rightBtnFailureMsg = '';

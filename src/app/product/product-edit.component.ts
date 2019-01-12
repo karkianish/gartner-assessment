@@ -34,8 +34,8 @@ export class ProductEditComponent implements OnInit {
   onUpdateClicked(payload: Product): void {
     payload.ProductId = this._id;
     this.http.updateProduct(payload)
-      .subscribe(res => this.successMsg = 'Yay! Updated!',
-        err => this.failureMsg = 'Oops! Update failed. Sorry about that. Please try again later.'
+      .subscribe(res => this.successMsg = `Yay! - ${payload.Name} was successfully updated!`,
+        err => this.failureMsg = this.config.rightBtnFailureMsg
       );
   }
 

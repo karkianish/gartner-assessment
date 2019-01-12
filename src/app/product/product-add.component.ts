@@ -16,6 +16,7 @@ export class ProductAddComponent implements OnInit {
 
   successMsg = '';
   failureMsg = '';
+  clearInputFields = false;
 
   constructor(private http: ProductService,
     private router: Router,
@@ -34,7 +35,10 @@ export class ProductAddComponent implements OnInit {
   onAddClicked(payload: Product): void {
     payload.ProductId = this._id;
     this.http.addProduct(payload)
-      .subscribe(res => this.successMsg = this.config.rightBtnSuccessMsg,
+      .subscribe(res => {
+        this.successMsg = `Nice! - ${payload.Name} was successfully added!`;
+        this.clearInputFields = true;
+      },
         err => this.failureMsg = this.config.rightBtnFailureMsg
       );
   }

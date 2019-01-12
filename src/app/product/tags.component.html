@@ -9,7 +9,7 @@
     Duplicate selection is not allowed.
   </span>
   <div class='mb-3'>
-    <button type="button" *ngFor='let tag of tags' class="btn btn-info bg-info p-1 m-1 text-white">
+    <button tabindex="-1" type="button" *ngFor='let tag of tags' class="btn btn-info bg-info p-1 m-1 text-white">
       {{tag}}<span class="remove-tag" (click)='onRemoveTagClicked(tag)'> x</span></button>
   </div>
 </form>
