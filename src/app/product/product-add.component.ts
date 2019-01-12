@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { Product, EditProductConfig, Category } from './product.model';
+import { IEditorConfig, AddProductConfig as AddProductConfig, Product, Category } from './product.model';
+import { Router, ActivatedRoute } from '@angular/router';
 import { ProductService } from './product.service';
-import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
-  templateUrl: './product-edit.component.html'
+  templateUrl: './product-add.component.html'
 })
-export class ProductEditComponent implements OnInit {
+export class ProductAddComponent implements OnInit {
   private _id: number;
 
-  config = new EditProductConfig();
+  config = new AddProductConfig();
 
   product: Product;
   allCategories: Array<Category>;
@@ -31,12 +31,11 @@ export class ProductEditComponent implements OnInit {
       .subscribe(res => { this.allCategories = res; });
   }
 
-  onUpdateClicked(payload: Product): void {
-    console.log('pl', payload);
+  onAddClicked(payload: Product): void {
     payload.ProductId = this._id;
-    this.http.updateProduct(payload)
-      .subscribe(res => this.successMsg = 'Yay! Updated!',
-        err => this.failureMsg = 'Oops! Update failed. Sorry about that. Please try again later.'
+    this.http.addProduct(payload)
+      .subscribe(res => this.successMsg = this.config.rightBtnSuccessMsg,
+        err => this.failureMsg = this.config.rightBtnFailureMsg
       );
   }
 

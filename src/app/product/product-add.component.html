@@ -2,8 +2,11 @@
     <div class='card-header bg-primary text-white h3'>Add Product</div>
     <div class='card-body'>
       <app-product-editor [config]='config' 
-        (rightButtonClicked)='onEditClicked()' 
+        (rightButtonClicked)='onUpdateClicked($event)' 
         (leftButtonClicked)='onBackClicked()' 
+        [rightButtonSuccessMsg]='successMsg'
+        [rightButtonFailureMsg]='failureMsg'
+        [allCategories]='allCategories' 
         [product]='product'>
       </app-product-editor>
     </div>

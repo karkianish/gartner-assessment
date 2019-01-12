@@ -11,10 +11,13 @@ import { ProductEditComponent } from './product/product-edit.component';
 import { ProductListComponent } from './product/product-list.component';
 import { Routes, RouterModule } from '@angular/router';
 import { TagsComponent } from './product/tags.component';
+import { ProductAddComponent } from './product/product-add.component';
+import { ProductEditorComponent } from './product/product-editor.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'products', pathMatch: 'full' },
   { path: 'products', component: ProductListComponent },
+  { path: 'add', component: ProductAddComponent },
   { path: 'details/:id', component: ProductDetailComponent },
   { path: 'edit/:id', component: ProductEditComponent }
 ];
@@ -26,6 +29,8 @@ const routes: Routes = [
     ProductEditComponent,
     ProductListComponent,
     TagsComponent,
+    ProductAddComponent,
+    ProductEditorComponent,
   ],
   imports: [
     BrowserModule,

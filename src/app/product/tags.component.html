@@ -1,7 +1,7 @@
 <form [formGroup]='tagForm'>
   <label for="tag-input">Category</label>
   <input type="text" id="tag-input" formControlName='tagInput' class='form-control' [ngbTypeahead]='search' (focus)="focus$.next($event.target.value)"
-    placeholder="type category name and hit enter" (click)="click$.next($event.target.value)" (keyup)="onKeyUp($event)">
+    placeholder="type category name and hit enter" (click)="click$.next($event.target.value)" (keyup)="onKeyUp($event)" [readonly]='readonly'>
   <span *ngIf='showErrorMessage' class='text-danger'>
     Please make a selection from the option.
   </span>

@@ -1,0 +1,48 @@
+<form [formGroup]='productEditForm'>
+
+  <div *ngIf='canDisplaySuccessMsg' class="alert alert-success alert-dismissible fade show">
+    {{rightBtnSuccessMsg}}
+  </div>
+
+  <div *ngIf='canDisplayFailureMsg' class="alert alert-success alert-dismissible fade show">
+    {{rightBtnFailureMsg}}
+  </div>
+
+  <div class='form-group'>
+    <label for='name'>Product Name</label>
+    <input type='text' [ngClass]='{"is-invalid": formErrors.name}' formControlName='name' [readonly]='config?.readonly'
+      class='form-control' id='name'>
+    <span *ngIf='formErrors.name' class='text-danger'>
+      {{formErrors.name}}
+    </span>
+  </div>
+
+  <div class='form-group'>
+    <label for='description'>Description</label>
+    <textarea class='form-control' [ngClass]='{"is-invalid": formErrors.description}' formControlName='description' id='description'
+      [readonly]='config?.readonly'></textarea>
+    <span *ngIf='formErrors.description' class='text-danger'>
+      {{formErrors.description}}
+    </span>
+  </div>
+
+  <div class='form-group'>
+    <label for='url'>Web Url</label>
+    <textarea class='form-control' [ngClass]='{"is-invalid": formErrors.url}' formControlName='url' id='url'
+      placeholder='optional' [readonly]='config?.readonly'></textarea>
+    <span *ngIf='formErrors.url' class='text-danger'>
+      {{formErrors.url}}
+    </span>
+  </div>
+
+  <app-tags [readonly]='config?.readonly' [options]='categoryNames'></app-tags>
+
+  <div class='row'>
+    <div class='col-6 text-left'>
+      <button type='button' class='btn btn-primary' (click)='onLeftButtonClicked()'>{{config?.btnLeftText}}</button>
+    </div>
+    <div class='col-6 text-right'>
+      <button type='button' class='ml-1 btn btn-primary' (click)='onRightButtonClicked()'>{{config?.btnRightText}}</button>
+    </div>
+  </div>
+</form>

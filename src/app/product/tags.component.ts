@@ -7,12 +7,14 @@ import { EventEmitter } from 'events';
 @Component({
   selector: 'app-tags',
   templateUrl: './tags.component.html',
-  styleUrls: ['./tags.component.scss']
+  styles: [`span.remove-tag:hover { color: red; }`]
 })
 export class TagsComponent implements OnInit {
+  @Input() options = [];
+  @Input() readonly = false;
+
   tagForm: FormGroup;
   tags = [];
-  @Input() options = ['acct', 'bat'];
 
   focus$ = new Subject<string>();
   click$ = new Subject<string>();
@@ -44,7 +46,7 @@ export class TagsComponent implements OnInit {
 
     this.showDuplicateMsg = false;
     this.showErrorMessage = false;
-    
+
     const pressedEnterKey = event.keyCode === 13;
     if (pressedEnterKey) {
       const ctrl = this.tagForm.get('tagInput');
@@ -61,6 +63,8 @@ export class TagsComponent implements OnInit {
   }
 
   onRemoveTagClicked(tagname: string): void {
-    this.tags = this.tags.filter(tag => tag !== tagname);
+    if (!this.readonly) {
+      this.tags = this.tags.filter(tag => tag !== tagname);
+    }
   }
 }
