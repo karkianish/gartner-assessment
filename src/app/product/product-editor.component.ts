@@ -47,7 +47,13 @@ export class ProductEditorComponent implements OnInit {
   formErrors: { [controlName: string]: string } = {};
 
   onFormChanged(data: any): void {
-    this.formErrors = this.validator.validate(this.productEditForm);
+    if (this.productEditForm.pristine && this.productEditForm.untouched) {
+      // ak - means the form was reset. so clear any errors.
+      this.formErrors = {};
+    } else {
+      this.formErrors = this.validator.validate(this.productEditForm);
+    }
+
   }
 
   @Input('clearInputFields')
@@ -132,7 +138,10 @@ export class ProductEditorComponent implements OnInit {
   }
 
   onRightButtonClicked(): void {
-    this.rightButtonClicked.emit(this.getUpdatedProduct());
+    this.formErrors = this.validator.validate(this.productEditForm);
+    if (this.productEditForm.valid) {
+      this.rightButtonClicked.emit(this.getUpdatedProduct());
+    }
   }
 
   getUpdatedProduct(): Product {
