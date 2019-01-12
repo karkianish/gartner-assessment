@@ -32,7 +32,6 @@ export class ProductEditComponent implements OnInit {
   }
 
   onUpdateClicked(payload: Product): void {
-    console.log('pl', payload);
     payload.ProductId = this._id;
     this.http.updateProduct(payload)
       .subscribe(res => this.successMsg = 'Yay! Updated!',

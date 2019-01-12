@@ -75,7 +75,6 @@ export class ProductEditorComponent implements OnInit {
 
   @Input('rightButtonSuccessMsg')
   set rightButtonSuccessMsg(msg: string) {
-    console.log('msg', msg)
     if (msg) {
       this.rightBtnSuccessMsg = msg;
       this.canDisplayRightBtnSuccessMsg = true;

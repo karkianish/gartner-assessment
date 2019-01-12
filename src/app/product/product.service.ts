@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable, of, BehaviorSubject } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Product, Category } from './product.model';
 
@@ -7,8 +7,8 @@ import { Product, Category } from './product.model';
   providedIn: 'root'
 })
 export class ProductService {
-
   private readonly _apiPath = `https://gdm-interview-api.azurewebsites.net/api/v1`;
+  private _cachedCategories: Array<Category>;
 
   private readonly _headers = new HttpHeaders({
     'content-type': 'application/json',
@@ -18,8 +18,19 @@ export class ProductService {
 
   constructor(private http: HttpClient) { }
 
-  getCategories(): Observable<Category[]> {
-    return this.http.get<Category[]>(`${this._apiPath}/categories`, { headers: this._headers});
+  getCategories(tryUseCache = true): Observable<Category[]> {
+    // ak - 01-12-2018 - the idea is to load this only once when the application loads
+    // and use cached version unless explicitly requested. Since users can't modify this data
+    // caching it for the app lifetime should be okay.
+    if (tryUseCache && this._cachedCategories) {
+      return of(this._cachedCategories);
+    } else {
+      return this.http.get<Category[]>(`${this._apiPath}/categories`, { headers: this._headers });
+    }
+  }
+
+  setCategories(res: Category[]): void {
+    this._cachedCategories = res;
   }
 
   getProducts(): Observable<Product[]> {
