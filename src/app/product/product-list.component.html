@@ -1,13 +1,25 @@
 <div class='card '>
   <div class='card-header bg-primary text-white h3'>Products</div>
   <div class='card-body'>
-    <p>Welcome to Gartner Product Management application! This application will allow you to view our existing products, edit them, and create a new one.</p>
+    <p>Welcome to Gartner Product Management application! This application will allow you to view our existing
+      products, search them. edit them, and create a new ones!</p>
 
-    <div class="row">
-      <div class="col text-right mb-2">
-        <button type='button' class='btn btn-success' (click)='onAddClicked()'>Add Product</button>
+    <form [formGroup]='productListForm'>
+      <div class="row">
+        <div class="col-md-5 col-lg-8 form-group">
+          <label class='sr-only' for="search">Search</label>
+          <input type="text" id='serach' formControlName='search' class='form-control' placeholder="(type product name to search)">
+        </div>
+        <div class="col-md-4 col-lg-2">
+          <label class='mt-md-2'>Product Count: {{filteredProducts?.length | number}}</label>
+        </div>
+        <div class="col-md-3 col-lg-2 form-group text-right">
+          <button type='button' id='add-product' class='form-control btn btn-success' (click)='onAddClicked()'>Add
+            Product</button>
+        </div>
       </div>
-    </div>
+    </form>
+
     <table class='table table-hover'>
       <thead>
         <tr>
@@ -18,7 +30,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor='let product of products'>
+        <tr *ngFor='let product of filteredProducts'>
           <td>{{product.Name}}</td>
           <td>{{product.Description}}</td>
           <td><button type='button' class='btn btn-link' (click)='onDetailsClicked(product.ProductId)'>Details</button></td>

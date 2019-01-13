@@ -25,11 +25,7 @@ export class ProductAddComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.http.getProduct(this._id)
-      .subscribe(res => this.product = res);
-
-    this.http.getCategories()
-      .subscribe(res => { this.allCategories = res; });
+    this.http.getCategories().subscribe(res => this.allCategories = res);
   }
 
   onAddClicked(payload: Product): void {

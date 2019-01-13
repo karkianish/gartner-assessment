@@ -3,10 +3,10 @@
   <input type="text" id="tag-input" formControlName='tagInput' class='form-control' [ngbTypeahead]='search' (focus)="focus$.next($event.target.value)"
     placeholder="type category name and hit enter" (click)="click$.next($event.target.value)" (keyup)="onKeyUp($event)" [readonly]='readonly'>
   <span *ngIf='showErrorMessage' class='text-danger'>
-    Please make a selection from the option.
+    Oops! We don't have that category yet.
   </span>
   <span *ngIf='showDuplicateMsg' class='text-danger'>
-    Duplicate selection is not allowed.
+    Ok slow down! You've already added this category.
   </span>
   <div class='mb-3'>
     <button tabindex="-1" type="button" *ngFor='let tag of tags' class="btn btn-info bg-info p-1 m-1 text-white">

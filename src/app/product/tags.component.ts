@@ -1,8 +1,7 @@
 import { Component, OnInit, Input, Output } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Observable, Subject, merge } from 'rxjs';
-import { debounceTime, distinctUntilChanged, map, filter } from 'rxjs/operators';
-import { EventEmitter } from 'events';
+import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-tags',
@@ -55,7 +54,6 @@ export class TagsComponent implements OnInit {
       } else if (this.tags.indexOf(ctrl.value) > -1) {
         this.showDuplicateMsg = true;
       } else {
-
         this.tags.push(ctrl.value);
         ctrl.reset();
       }

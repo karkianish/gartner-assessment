@@ -1,21 +1,37 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from './product.service';
 import { Product } from './product.model';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { debounceTime, map, merge } from 'rxjs/operators';
 
 @Component({
   templateUrl: './product-list.component.html'
 })
 export class ProductListComponent implements OnInit {
+  productListForm: FormGroup;
 
   constructor(private formBuilder: FormBuilder,
     private router: Router,
     private service: ProductService) { }
 
-  products: Product[] = [];
+  allProducts: Product[] = [];
+  filteredProducts = [];
 
   ngOnInit() {
+    this.productListForm = this.formBuilder.group({
+      'search': ''
+    });
+
+    this.productListForm
+      .get('search')
+      .valueChanges
+      .pipe(debounceTime(200))
+      .subscribe((data: string) => {
+        this.filteredProducts = this.allProducts.filter(
+          product => product.Name.toLowerCase().indexOf(data.toLowerCase()) > -1);
+      });
+
     this.service.getProducts()
       .subscribe(res => this.onProductLoaded(res),
         err => this.handleError(err));
@@ -26,7 +42,8 @@ export class ProductListComponent implements OnInit {
   }
 
   onProductLoaded(products: Product[]): void {
-    this.products = products.sort((p1, p2) => p1.Name.localeCompare(p2.Name));
+    this.allProducts = products.sort((p1, p2) => p1.Name.localeCompare(p2.Name));
+    this.filteredProducts = this.allProducts;
   }
 
   onDetailsClicked(id: number): void {
