@@ -36,9 +36,7 @@ export class ProductEditComponent implements OnInit {
   handleError(err: any): void {
     // ak - 01-12-2019 - reset before providing a new value; to ensure change detection kicks in
     this.failureMsg = '';
-    this.failureMsg = `An error occurred. Please try again later. However,
-     if you continue to get this message, please contact us at 1800-000-0000. We are sorry for the inconveniece.`;
-
+    this.failureMsg = this.config.rightBtnFailureMsg;
   }
 
   onUpdateClicked(payload: Product): void {

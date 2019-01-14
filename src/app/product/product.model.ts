@@ -19,14 +19,15 @@ export interface IEditorConfig {
   rightBtnFailureMsg: string;
 }
 
+const errorMessage = `An error occurred. We are sorry for the inconveniece.
+Please try again later. If you continue to get this message, please contact us at 1800-000-0000`;
+
 export class AddProductConfig implements IEditorConfig {
   readonly = false;
   btnRightText = 'Add Product';
   btnLeftText = 'Back To Summary';
   rightBtnSuccessMsg = 'Yay! Product successfuly added.';
-  rightBtnFailureMsg = `An error occurred. We are sorry for the inconveniece.
-          Please try again later. If you continue to get this message, please contact us at 1800-000-0000`;
-
+  rightBtnFailureMsg = errorMessage;
 }
 
 export class EditProductConfig implements IEditorConfig {
@@ -34,7 +35,7 @@ export class EditProductConfig implements IEditorConfig {
   btnRightText = 'Update';
   btnLeftText = 'Back To Summary';
   rightBtnSuccessMsg = 'Sweet! Product successfuly updated.';
-  rightBtnFailureMsg = 'Oh no! An error occurred. Sorry about this.';
+  rightBtnFailureMsg = errorMessage;
 }
 
 export class ProductDetailsConfig implements IEditorConfig {
