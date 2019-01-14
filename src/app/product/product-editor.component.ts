@@ -150,9 +150,9 @@ export class ProductEditorComponent implements OnInit {
     product.Name = this.productEditForm.get('name').value as string;
     product.Description = this.productEditForm.get('description').value as string;
     product.Url = this.productEditForm.get('url').value as string;
-    product.Categories = this.allCategories.filter(
-      category => this.tagComponent.tags && this.tagComponent.tags.includes(category.Name));
-
+    product.CategoryIds = this.allCategories
+      .filter(category => this.tagComponent.tags && this.tagComponent.tags.includes(category.Name))
+      .map(c => c.CategoryId);
     return product;
   }
 }

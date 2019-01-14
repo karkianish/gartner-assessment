@@ -4,6 +4,7 @@ export class Product {
   Description: string;
   Url: string;
   Categories: Array<Category>;
+  CategoryIds: Array<number>;
 }
 
 export class Category {
