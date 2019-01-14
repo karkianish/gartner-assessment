@@ -8,7 +8,7 @@
       <div class="row">
         <div class="col-md-5 col-lg-8 form-group">
           <label class='sr-only' for="search">Search</label>
-          <input type="text" id='serach' formControlName='search' class='form-control' placeholder="(type product name to search)">
+          <input type="text" id='serach' formControlName='search' class='form-control' [placeholder]='searchPlaceholderText'>
         </div>
         <div class="col-md-4 col-lg-2">
           <label class='mt-md-2'>Product Count: {{filteredProducts?.length | number}}</label>

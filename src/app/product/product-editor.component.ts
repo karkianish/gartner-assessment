@@ -13,7 +13,8 @@ export class ProductEditorComponent implements OnInit {
   @Input() nameMaxLength = 50;
   @Input() descriptionMaxLength = 200;
   @Input() urlMaxLength = 500;
-  @Input() hideMsgInMiliseconds = 3000;
+  @Input() hideSuccessMsgInMiliseconds = 3000;
+  @Input() hideFailureMsgInMiliseconds = 7000;
 
   @ViewChild(TagsComponent)
   tagComponent: TagsComponent;
@@ -27,8 +28,8 @@ export class ProductEditorComponent implements OnInit {
 
   rightBtnSuccessMsg = '';
   rightBtnFailureMsg = '';
-  canDisplayRightBtnSuccessMsg = false;
-  canDisplayRightBtnFailureMsg = false;
+  canDisplaySuccessMsg = false;
+  canDisplayFailureMsg = false;
 
   productEditForm: FormGroup;
   validator: GenericValidator;
@@ -53,13 +54,13 @@ export class ProductEditorComponent implements OnInit {
     } else {
       this.formErrors = this.validator.validate(this.productEditForm);
     }
-
   }
 
   @Input('clearInputFields')
   set clearInputFields(clear: boolean) {
     if (clear) {
       this.productEditForm.reset();
+      this.tagComponent.tags = [];
     }
   }
 
@@ -90,14 +91,14 @@ export class ProductEditorComponent implements OnInit {
   set rightButtonSuccessMsg(msg: string) {
     if (msg) {
       this.rightBtnSuccessMsg = msg;
-      this.canDisplayRightBtnSuccessMsg = true;
+      this.canDisplaySuccessMsg = true;
       setTimeout(() => {
-        this.canDisplayRightBtnSuccessMsg = false;
-      }, this.hideMsgInMiliseconds);
+        this.canDisplaySuccessMsg = false;
+      }, this.hideSuccessMsgInMiliseconds);
 
     } else {
       this.rightBtnSuccessMsg = '';
-      this.canDisplayRightBtnSuccessMsg = false;
+      this.canDisplaySuccessMsg = false;
     }
   }
 
@@ -105,14 +106,14 @@ export class ProductEditorComponent implements OnInit {
   set rightButtonFailureMsg(msg: string) {
     if (msg) {
       this.rightBtnFailureMsg = msg;
-      this.canDisplayRightBtnFailureMsg = true;
+      this.canDisplayFailureMsg = true;
       setTimeout(() => {
-        this.canDisplayRightBtnFailureMsg = false;
-      }, this.hideMsgInMiliseconds);
+        this.canDisplayFailureMsg = false;
+      }, this.hideFailureMsgInMiliseconds);
 
     } else {
       this.rightBtnFailureMsg = '';
-      this.canDisplayRightBtnFailureMsg = false;
+      this.canDisplayFailureMsg = false;
     }
   }
 

@@ -31,11 +31,20 @@ export class ProductAddComponent implements OnInit {
   onAddClicked(payload: Product): void {
     payload.ProductId = this._id;
     this.http.addProduct(payload)
-      .subscribe(res => {
-        this.successMsg = `Nice! - ${payload.Name} was successfully added!`;
-        this.clearInputFields = true;
-      },
-        err => this.failureMsg = this.config.rightBtnFailureMsg
+      .subscribe(
+        res => {
+          // ak - 01-12-2018 - since the new value can be the same as the old value, change detection will not do it's magic
+          // so to make sure change detection kicks in - reset the value before providing the new one.
+          this.successMsg = '';
+          this.clearInputFields = false;
+
+          this.successMsg = `Nice! - ${payload.Name} was successfully added!`;
+          this.clearInputFields = true;
+        },
+        err => {
+          this.failureMsg = '';
+          this.failureMsg = this.config.rightBtnFailureMsg;
+        }
       );
   }
 

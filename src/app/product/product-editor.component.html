@@ -1,10 +1,10 @@
 <form [formGroup]='productEditForm'>
 
-  <div *ngIf='canDisplayRightBtnSuccessMsg' class="alert alert-success alert-dismissible fade show">
+  <div *ngIf='canDisplaySuccessMsg' class="alert alert-success fade show">
     {{rightBtnSuccessMsg}}
   </div>
 
-  <div *ngIf='canDisplayRightBtnFailureMsg' class="alert alert-success alert-dismissible fade show">
+  <div *ngIf='canDisplayFailureMsg' class="alert alert-danger fade show">
     {{rightBtnFailureMsg}}
   </div>
 

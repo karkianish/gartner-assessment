@@ -17,6 +17,7 @@ export class ProductListComponent implements OnInit {
 
   allProducts: Product[] = [];
   filteredProducts = [];
+  searchPlaceholderText = '';
 
   ngOnInit() {
     this.productListForm = this.formBuilder.group({
@@ -32,6 +33,7 @@ export class ProductListComponent implements OnInit {
           product => product.Name.toLowerCase().indexOf(data.toLowerCase()) > -1);
       });
 
+      this.searchPlaceholderText = 'loading products... almost there!';
     this.service.getProducts()
       .subscribe(res => this.onProductLoaded(res),
         err => this.handleError(err));
@@ -44,6 +46,7 @@ export class ProductListComponent implements OnInit {
   onProductLoaded(products: Product[]): void {
     this.allProducts = products.sort((p1, p2) => p1.Name.localeCompare(p2.Name));
     this.filteredProducts = this.allProducts;
+    this.searchPlaceholderText = '(type product name to search)';
   }
 
   onDetailsClicked(id: number): void {

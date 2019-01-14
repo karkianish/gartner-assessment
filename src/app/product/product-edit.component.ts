@@ -25,17 +25,27 @@ export class ProductEditComponent implements OnInit {
 
   ngOnInit() {
     this.http.getProduct(this._id)
-      .subscribe(res => this.product = res);
+      .subscribe(res => this.product = res,
+        err => this.handleError(err));
 
     this.http.getCategories()
-      .subscribe(res => { this.allCategories = res; });
+      .subscribe(res => this.allCategories = res,
+        err => this.handleError(err));
+  }
+
+  handleError(err: any): void {
+    // ak - 01-12-2019 - reset before providing a new value; to ensure change detection kicks in
+    this.failureMsg = '';
+    this.failureMsg = `An error occurred. Please try again later. However,
+     if you continue to get this message, please contact us at 1800-000-0000. We are sorry for the inconveniece.`;
+
   }
 
   onUpdateClicked(payload: Product): void {
     payload.ProductId = this._id;
     this.http.updateProduct(payload)
       .subscribe(res => this.successMsg = `Yay! - ${payload.Name} was successfully updated!`,
-        err => this.failureMsg = this.config.rightBtnFailureMsg
+        err => this.handleError(err)
       );
   }
 
